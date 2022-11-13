@@ -33,7 +33,13 @@ const Auth = {
 	isAuthorized: async (headers, body) => {
 		console.log('HEADERS:', headers)
 		console.log('BODY:', JSON.stringify(body))
-		if (headers.authorization && headers.authorization.split(' ')[1] && body['access_token']) {
+		const headerToken = headers.authorization.split(' ')[1];
+		const bodyToken = body['access_token'];
+		console.log({
+			headerToken,
+			bodyToken
+		})
+		if (headers.authorization && headerToken && bodyToken && headerToken !== bodyToken) {
 			return Error.INVALID
 		}
 		const token = Auth.getToken(headers, body)
