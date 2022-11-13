@@ -33,23 +33,27 @@ const Auth = {
 	isAuthorized: async (headers, body) => {
 		console.log('HEADERS:', headers)
 		console.log('BODY:', JSON.stringify(body))
-		const headerToken = headers.authorization.split(' ')[1];
+		const headerToken = headers.authorization ? headers.authorization.split(' ')[1] : null;
 		const bodyToken = body['access_token'];
 		console.log({
 			headerToken,
 			bodyToken
 		})
-		if (headers.authorization && headerToken && bodyToken && headerToken !== bodyToken) {
+		if (headerToken && bodyToken && headerToken !== bodyToken) {
+			console.log('Error; invalid', headerToken !== bodyToken)
 			return Error.INVALID
 		}
 		const token = Auth.getToken(headers, body)
 		if (!token || token.error) {
+			console.log('Error; unauthorized', token)
 			return token || Error.UNAUTHORIZED
 		}
 		const auth = await Auth.validateToken(process.env.TOKEN_ENDPOINT, token)
 		if (!auth || auth.me != process.env.ME) {
+			console.log('Error; forbidden')
 			return Error.FORBIDDEN
 		}
+		console.log('authorized: ', auth)
 		return auth
 	}
 }
