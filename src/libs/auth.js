@@ -24,25 +24,17 @@ const Auth = {
 		return requiredScopes.split(' ').some(sc => validScopes.includes(sc))
 	},
 	getToken: (headers, body) => {
-		if (headers && headers.authorization && headers.authorization.split(' ')[1] && body && body['access_token']) {
+		const headerToken = headers && headers.authorization ? headers.authorization.split(' ')[1] : null;
+		const bodyToken = body ? body['access_token'] : null;
+		if (headerToken && bodyToken && headerToken !== bodyToken) {
 			return Error.INVALID
 		}
-		const token = (headers && headers.authorization && headers.authorization.split(' ')[1]) || (body && body['access_token'])
+		const token = headerToken || bodyToken;
 		return token || Error.UNAUTHORIZED
 	},
 	isAuthorized: async (headers, body) => {
 		console.log('HEADERS:', headers)
 		console.log('BODY:', JSON.stringify(body))
-		const headerToken = headers.authorization ? headers.authorization.split(' ')[1] : null;
-		const bodyToken = body['access_token'];
-		console.log({
-			headerToken,
-			bodyToken
-		})
-		if (headerToken && bodyToken && headerToken !== bodyToken) {
-			console.log('Error; invalid', headerToken !== bodyToken)
-			return Error.INVALID
-		}
 		const token = Auth.getToken(headers, body)
 		if (!token || token.error) {
 			console.log('Error; unauthorized', token)
