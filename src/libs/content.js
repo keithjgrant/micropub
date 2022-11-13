@@ -56,16 +56,21 @@ const content = {
 		const slug = slugParts.join('-')
 		const dir = (process.env.CONTENT_DIR || 'src').replace(/\/$/, '')
 		const fileParts = [dir, type];
+		console.log(process.env);
 		if (process.env.PATH_YEAR) {
+			console.log('year')
 			slugParts.push(date.getFullYear().toString());
 		}
 		if (process.env.PATH_MONTH) {
+			console.log('month')
 			slugParts.push((date.getMonth() + 1).toString());
 		}
 		if (process.env.PATH_DAY) {
+			console.log('day')
 			slugParts.push(date.getDate().toString());
 		}
 		fileParts.push(slug);
+		console.log('fileParts:', fileParts)
 		const filename = `${fileParts.join('/')}.md`
 		const { access_token, ...sanitized } = data;
 
