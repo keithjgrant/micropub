@@ -52,15 +52,28 @@ const content = {
 		} else {
 			slugParts.push(Math.round(date / 1000))
 		}
+
 		const slug = slugParts.join('-')
 		const dir = (process.env.CONTENT_DIR || 'src').replace(/\/$/, '')
-		const filename = `${dir}/${type}/${slug}.md`
+		const fileParts = [dir, type];
+		if (process.env.PATH_YEAR) {
+			slugParts.push(date.getFullYear().toString());
+		}
+		if (process.env.PATH_MONTH) {
+			slugParts.push((date.getMonth() + 1).toString());
+		}
+		if (process.env.PATH_DAY) {
+			slugParts.push(date.getDate().toString());
+		}
+		fileParts.push(slug);
+		const filename = `${fileParts.join('/')}.md`
+		const { access_token, ...sanitized } = data;
 
 		return {
 			'filename': filename,
 			'slug': `${type}/${slug}`,
 			'formatted': content.output(data, clientId),
-			'data': data
+			'data': sanitized,
 		}
 	},
 
