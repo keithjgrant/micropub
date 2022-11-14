@@ -55,7 +55,7 @@ const content = {
 
 		const slug = slugParts.join('-')
 		const dir = (process.env.CONTENT_DIR || 'src').replace(/\/$/, '')
-		const pathParts = [dir, type];
+		const pathParts = [type];
 		console.log(process.env);
 		if (process.env.PATH_YEAR) {
 			pathParts.push(date.getFullYear().toString());
