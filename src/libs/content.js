@@ -72,8 +72,8 @@ const content = {
 		return {
 			'filename': `${dir}/${path}/${slug}.md`,
 			'slug': `${path}/${slug}`,
-			'formatted': content.output(data, clientId),
-			'data': sanitized,
+			'formatted': content.output(sanitized, clientId),
+			'data': data,
 		}
 	},
 
