@@ -71,7 +71,7 @@ const content = {
 		}
 		// fileParts.push(slug);
 		console.log('pathParts:', pathParts)
-		const path = `${pathParts.join('/')}.md`
+		const path = pathParts.join('/')
 		const { access_token, ...sanitized } = data;
 
 		return {
