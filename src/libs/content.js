@@ -55,28 +55,28 @@ const content = {
 
 		const slug = slugParts.join('-')
 		const dir = (process.env.CONTENT_DIR || 'src').replace(/\/$/, '')
-		const fileParts = [dir, type];
+		const pathParts = [dir, type];
 		console.log(process.env);
 		if (process.env.PATH_YEAR) {
 			console.log('year')
-			fileParts.push(date.getFullYear().toString());
+			pathParts.push(date.getFullYear().toString());
 		}
 		if (process.env.PATH_MONTH) {
 			console.log('month')
-			fileParts.push((date.getMonth() + 1).toString());
+			pathParts.push((date.getMonth() + 1).toString());
 		}
 		if (process.env.PATH_DAY) {
 			console.log('day')
-			fileParts.push(date.getDate().toString());
+			pathParts.push(date.getDate().toString());
 		}
-		fileParts.push(slug);
-		console.log('fileParts:', fileParts)
-		const filename = `${fileParts.join('/')}.md`
+		// fileParts.push(slug);
+		console.log('pathParts:', pathParts)
+		const path = `${pathParts.join('/')}.md`
 		const { access_token, ...sanitized } = data;
 
 		return {
-			'filename': filename,
-			'slug': `${type}/${slug}`,
+			'filename': `${dir}/${path}/${slug}.md`,
+			'slug': `${path}/${slug}`,
 			'formatted': content.output(data, clientId),
 			'data': sanitized,
 		}
