@@ -59,15 +59,15 @@ const content = {
 		console.log(process.env);
 		if (process.env.PATH_YEAR) {
 			console.log('year')
-			slugParts.push(date.getFullYear().toString());
+			fileParts.push(date.getFullYear().toString());
 		}
 		if (process.env.PATH_MONTH) {
 			console.log('month')
-			slugParts.push((date.getMonth() + 1).toString());
+			fileParts.push((date.getMonth() + 1).toString());
 		}
 		if (process.env.PATH_DAY) {
 			console.log('day')
-			slugParts.push(date.getDate().toString());
+			fileParts.push(date.getDate().toString());
 		}
 		fileParts.push(slug);
 		console.log('fileParts:', fileParts)
