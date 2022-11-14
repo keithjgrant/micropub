@@ -58,19 +58,14 @@ const content = {
 		const pathParts = [dir, type];
 		console.log(process.env);
 		if (process.env.PATH_YEAR) {
-			console.log('year')
 			pathParts.push(date.getFullYear().toString());
 		}
 		if (process.env.PATH_MONTH) {
-			console.log('month')
 			pathParts.push((date.getMonth() + 1).toString());
 		}
 		if (process.env.PATH_DAY) {
-			console.log('day')
 			pathParts.push(date.getDate().toString());
 		}
-		// fileParts.push(slug);
-		console.log('pathParts:', pathParts)
 		const path = pathParts.join('/')
 		const { access_token, ...sanitized } = data;
 
